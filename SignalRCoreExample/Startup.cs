@@ -35,16 +35,7 @@ namespace SignalRCoreExample
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Error");
-            }
-
-            app.UseHttpsRedirection();
+            app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
