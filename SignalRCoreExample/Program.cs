@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using System.Net;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SignalRCoreExample
 {
@@ -12,7 +16,17 @@ namespace SignalRCoreExample
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseUrls("http://localhost:5000");
+                .UseKestrel(opts =>
+                {
+                    var configuration = opts.ApplicationServices.GetService<IConfiguration>();
+                    opts.Listen(IPAddress.Loopback, 5000);
+                    opts.Listen(IPAddress.Loopback, 5001, listenOptions =>
+                    {
+                        listenOptions.UseHttps(
+                            new X509Certificate2(configuration["certificate:path"])
+                        );
+                    });
+                })
+                .UseStartup<Startup>();
     }
 }

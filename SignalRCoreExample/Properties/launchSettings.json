@@ -2,7 +2,7 @@
   "profiles": {
     "SignalRCoreExample": {
       "commandName": "Project",
-      "applicationUrl": "https://localhost:5005;http://localhost:5000",
+      "applicationUrl": "http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
