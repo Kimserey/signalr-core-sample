@@ -8,6 +8,7 @@
 
 const connection = new signalR.HubConnectionBuilder()
     .withUrl("/chatHub")
+    .configureLogging(signalR.LogLevel.Trace)
     .build();
 
 connection.on("ReceiveMessage", (user, message) => {
