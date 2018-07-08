@@ -22,9 +22,7 @@ namespace SignalRCoreExample
                     opts.Listen(IPAddress.Loopback, 5000);
                     opts.Listen(IPAddress.Loopback, 5001, listenOptions =>
                     {
-                        listenOptions.UseHttps(
-                            new X509Certificate2(configuration["certificate:path"])
-                        );
+                        listenOptions.UseHttps(configuration["certificate:path"], configuration["certificate:password"]);
                     });
                 })
                 .UseStartup<Startup>();
