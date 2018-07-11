@@ -19,8 +19,8 @@ namespace SignalRCoreExample
                 .UseKestrel(opts =>
                 {
                     var configuration = opts.ApplicationServices.GetService<IConfiguration>();
-                    opts.Listen(IPAddress.Loopback, 5000);
-                    opts.Listen(IPAddress.Loopback, 5001, listenOptions =>
+                    opts.Listen(IPAddress.Loopback, 5100);
+                    opts.Listen(IPAddress.Loopback, 5101, listenOptions =>
                     {
                         listenOptions.UseHttps(configuration["certificate:path"], configuration["certificate:password"]);
                     });

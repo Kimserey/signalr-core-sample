@@ -27,6 +27,14 @@ namespace SignalRCoreExample
             services.AddSignalR();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddAuthentication("Bearer")
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "https://localhost:5001";
+                    options.RequireHttpsMetadata = false;
+                    options.ApiName = "signalr";
+                });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -34,6 +42,8 @@ namespace SignalRCoreExample
             app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+
+            app.UseAuthentication();
 
             app.UseSignalR(routes =>
             {
