@@ -17,12 +17,14 @@ namespace SignalRCoreExample.Identity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddIdentityServer()
+                .AddDeveloperSigningCredential()
                 .AddInMemoryClients(new[] {
                     new Client {
+                        ClientId = "signalr-app",
                         ClientName = "signalr-app",
                         ClientSecrets = { new Secret("secret".Sha256()) },
                         AllowedScopes = { "signalr" },
-                        AllowedGrantTypes = GrantTypes.ClientCredentials
+                        AllowedGrantTypes = GrantTypes.ResourceOwnerPassword
                     }
                 })
                 .AddInMemoryApiResources(new[] {
@@ -35,7 +37,12 @@ namespace SignalRCoreExample.Identity
                 })
                 .AddInMemoryPersistedGrants()
                 .AddTestUsers(new List<TestUser>{
-                    new TestUser { SubjectId = "Alice", Password = "1234", Claims = new[] { new Claim("role", "admin") } }
+                    new TestUser {
+                        SubjectId = "alice",
+                        Username = "alice",
+                        Password = "password",
+                        Claims = new[] { new Claim("role", "admin") }
+                    }
                 });
         }
 
