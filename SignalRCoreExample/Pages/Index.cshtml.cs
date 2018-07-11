@@ -14,7 +14,7 @@ namespace SignalRCoreExample.Pages
 
         public async Task OnGetAsync()
         {
-            var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
+            var disco = await DiscoveryClient.GetAsync("https://localhost:5001");
             if (disco.IsError)
             {
                 Console.WriteLine(disco.Error);

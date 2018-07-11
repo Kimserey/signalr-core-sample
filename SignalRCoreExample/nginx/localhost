@@ -4,9 +4,9 @@ server {
 
 	listen				443 ssl;
 	listen				[::]:443 ssl;
-	ssl_certificate     /etc/ssl/certs/localhost-selfsigned.crt;
-	ssl_certificate_key /etc/ssl/private/localhost-selfsigned.key;
-	ssl_dhparam			/etc/ssl/certs/dhparam.pem;
+	ssl_certificate     /mnt/c/ssl/localhost.crt;
+	ssl_certificate_key /mnt/c/ssl/localhost.key;
+	# ssl_dhparam			/etc/ssl/certs/dhparam.pem;
 
 	include				/etc/nginx/proxy_params;
 	proxy_http_version	1.1;
@@ -15,6 +15,6 @@ server {
 	proxy_set_header    Upgrade $http_upgrade;
 
 	location / {
-		proxy_pass http://localhost:5000;
+		proxy_pass https://localhost:5101;
 	}
 }
