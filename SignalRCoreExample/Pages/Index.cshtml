@@ -22,7 +22,34 @@
             <ul id="messagesList"></ul>
         </div>
     </div>
+    <div>
+        Token: 
+        <br/>
+        @Model.Token
+    </div>
 </div>
 <script src="~/lib/signalr/signalr.js"></script>
-<script src="~/js/chat.js"></script>
-@*<script src="~/js/es5-chat.js"></script>*@
+
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chatHub?access_token=@Model.Token")
+        .configureLogging(signalR.LogLevel.Trace)
+        .build();
+
+    connection.on("ReceiveMessage", (user, message) => {
+        const msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        const encodedMsg = user + " says " + msg;
+        const li = document.createElement("li");
+        li.textContent = encodedMsg;
+        document.getElementById("messagesList").appendChild(li);
+    });
+
+    connection.start().catch(err => console.error(err.toString()));
+
+    document.getElementById("sendButton").addEventListener("click", event => {
+        const user = document.getElementById("userInput").value;
+        const message = document.getElementById("messageInput").value;
+        connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+        event.preventDefault();
+    });
+</script>

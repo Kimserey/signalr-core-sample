@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;
 
 namespace SignalRCoreExample
 {
+    [Authorize]
     public class ChatHub: Hub
     {
         public override async Task OnConnectedAsync()

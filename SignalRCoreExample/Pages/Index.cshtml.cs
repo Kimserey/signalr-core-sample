@@ -10,6 +10,8 @@ namespace SignalRCoreExample.Pages
 {
     public class IndexModel : PageModel
     {
+        public string Token { get; set; }
+
         public async Task OnGetAsync()
         {
             var disco = await DiscoveryClient.GetAsync("http://localhost:5000");
@@ -27,8 +29,7 @@ namespace SignalRCoreExample.Pages
                 return;
             }
 
-            Console.WriteLine(tokenResponse.Json);
-            Console.WriteLine("\n\n");
+            Token = tokenResponse.Json.Value<string>("access_token");
         }
     }
 }
