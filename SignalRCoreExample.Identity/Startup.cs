@@ -18,10 +18,15 @@ namespace SignalRCoreExample.Identity
         {
             services.AddIdentityServer()
                 .AddInMemoryClients(new[] {
-                    new Client { }
+                    new Client {
+                        ClientName = "signalr-app",
+                        ClientSecrets = { new Secret("secret".Sha256()) },
+                        AllowedScopes = { "signalr" },
+                        AllowedGrantTypes = GrantTypes.ClientCredentials
+                    }
                 })
                 .AddInMemoryApiResources(new[] {
-                    new ApiResource { }
+                    new ApiResource("signalr", "SignalR Test API")
                 })
                 .AddInMemoryIdentityResources(new List<IdentityResource> {
                     new IdentityResources.OpenId(),
@@ -30,7 +35,7 @@ namespace SignalRCoreExample.Identity
                 })
                 .AddInMemoryPersistedGrants()
                 .AddTestUsers(new List<TestUser>{
-                    new TestUser { SubjectId = "Alice", Password = "123456", Claims = new[] { new Claim("role", "admin") } }
+                    new TestUser { SubjectId = "Alice", Password = "1234", Claims = new[] { new Claim("role", "admin") } }
                 });
         }
 
@@ -42,11 +47,6 @@ namespace SignalRCoreExample.Identity
             }
 
             app.UseIdentityServer();
-
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Hello World!");
-            });
         }
     }
 }
