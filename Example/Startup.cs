@@ -73,9 +73,9 @@ namespace Example
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles();
-
             app.UseAuthentication();
+
+            app.UseStaticFiles();
 
             app.UseSignalR(hubRouteBuilder => {
                 hubRouteBuilder.MapHub<ChatHub>("/chathub");
