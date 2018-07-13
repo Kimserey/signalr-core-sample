@@ -20,22 +20,6 @@ namespace Example
 
             services.AddMvc();
 
-            services
-                .AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
-                .AddIdentityServerAuthentication(options =>
-                {
-                    options.Authority = "http://localhost:5000";
-                    options.RequireHttpsMetadata = false;
-                    options.ApiName = "my-api";
-                    options.NameClaimType = "sub";
-                    options.TokenRetriever = new Func<HttpRequest, string>(req =>
-                    {
-                        var fromHeader = TokenRetrieval.FromAuthorizationHeader();
-                        var fromQuery = TokenRetrieval.FromQueryString();
-                        return fromHeader(req) ?? fromQuery(req);
-                    });
-                });
-
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
                 .AddInMemoryClients(new[] {
@@ -63,6 +47,22 @@ namespace Example
                         Password = "password",
                         Claims = new[] { new Claim("role", "admin") }
                     }
+                });
+
+            services
+                .AddAuthentication(IdentityServerAuthenticationDefaults.AuthenticationScheme)
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = "http://localhost:5000";
+                    options.RequireHttpsMetadata = false;
+                    options.ApiName = "my-api";
+                    options.NameClaimType = "sub";
+                    options.TokenRetriever = new Func<HttpRequest, string>(req =>
+                    {
+                        var fromHeader = TokenRetrieval.FromAuthorizationHeader();
+                        var fromQuery = TokenRetrieval.FromQueryString();
+                        return fromHeader(req) ?? fromQuery(req);
+                    });
                 });
         }
 
