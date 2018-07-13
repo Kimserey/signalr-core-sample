@@ -40,15 +40,15 @@ namespace Example
                 .AddDeveloperSigningCredential()
                 .AddInMemoryClients(new[] {
                     new Client {
-                        ClientId = "signalr-app",
-                        ClientName = "signalr-app",
+                        ClientId = "my-app",
+                        ClientName = "my-app",
                         ClientSecrets = { new Secret("secret".Sha256()) },
-                        AllowedScopes = { "signalr" },
+                        AllowedScopes = { "my-api" },
                         AllowedGrantTypes = GrantTypes.ResourceOwnerPassword
                     }
                 })
                 .AddInMemoryApiResources(new[] {
-                    new ApiResource("signalr", "SignalR Test API")
+                    new ApiResource("my-api", "SignalR Test API")
                 })
                 .AddInMemoryIdentityResources(new List<IdentityResource> {
                     new IdentityResources.OpenId(),

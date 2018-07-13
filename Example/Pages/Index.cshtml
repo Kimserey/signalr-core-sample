@@ -31,12 +31,17 @@
                 <ul id="messagesList"></ul>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12">
+                @Model.Token
+            </div>
+        </div>
     </div>
 
     <script src="~/libs/signalr.js"></script>
     <script>
         const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/chathub")
+            .withUrl("/chathub?access_token=@Model.Token")
             .build();
 
         connection.on("ReceiveMessage", (user, message) => {
