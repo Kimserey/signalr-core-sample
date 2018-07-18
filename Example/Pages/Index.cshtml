@@ -41,7 +41,7 @@
     <script src="~/libs/signalr.js"></script>
     <script>
         const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/chathub?access_token=@Model.Token")
+            .withUrl("/chathub", { accessTokenFactory: () => "@Model.Token" })
             .build();
 
         connection.on("ReceiveMessage", (user, message) => {

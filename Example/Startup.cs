@@ -5,6 +5,7 @@ using IdentityServer4.Test;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace Example
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
+
+            services.AddSingleton<IUserIdProvider, NameUserIdProvider>();
 
             services.AddMvc();
 
@@ -76,7 +79,7 @@ namespace Example
             app.UseAuthentication();
 
             app.UseStaticFiles();
-
+ 
             app.UseSignalR(hubRouteBuilder => {
                 hubRouteBuilder.MapHub<ChatHub>("/chathub");
             });

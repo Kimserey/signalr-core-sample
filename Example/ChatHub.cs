@@ -23,6 +23,8 @@ namespace Example
         public async Task SendMessage(string user, string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
+
+            await Clients.User(Context.User.Identity.Name).SendAsync("ReceiveMessage", user, "To authenticated user: " + message);
         }
     }
 }
