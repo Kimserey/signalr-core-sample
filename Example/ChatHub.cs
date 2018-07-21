@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Example
 {
-    [Authorize]
+    //[Authorize]
     public class ChatHub : Hub
     {
         public override async Task OnConnectedAsync()
@@ -23,8 +23,7 @@ namespace Example
         public async Task SendMessage(string user, string message)
         {
             await Clients.All.SendAsync("ReceiveMessage", user, message);
-
-            await Clients.User(Context.User.Identity.Name).SendAsync("ReceiveMessage", user, "To authenticated user: " + message);
+            //await Clients.User(Context.User.Identity.Name).SendAsync("ReceiveMessage", user, "To authenticated user: " + message);
         }
     }
 }

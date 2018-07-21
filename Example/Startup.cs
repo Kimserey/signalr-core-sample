@@ -47,8 +47,12 @@ namespace Example
                     new TestUser {
                         SubjectId = "alice",
                         Username = "alice",
-                        Password = "password",
-                        Claims = new[] { new Claim("role", "admin") }
+                        Password = "password"
+                    },
+                    new TestUser {
+                        SubjectId = "bob",
+                        Username = "bob",
+                        Password = "password"
                     }
                 });
 
@@ -75,6 +79,12 @@ namespace Example
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(b => b.AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin()
+                .AllowCredentials()
+            );
 
             app.UseAuthentication();
 
