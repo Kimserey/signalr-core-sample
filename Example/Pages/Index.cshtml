@@ -44,7 +44,7 @@
             .withUrl("/chathub", { accessTokenFactory: () => "@Model.Token" })
             .build();
 
-        connection.on("ReceiveMessage", (user, message) => {
+        connection.on("receive", (user, message) => {
             const li = document.createElement("li");
             li.textContent = user + " says " + message;
             document.getElementById("messagesList").appendChild(li);
@@ -55,7 +55,7 @@
         document.getElementById("sendButton").addEventListener("click", event => {
             const user = document.getElementById("userInput").value;
             const message = document.getElementById("messageInput").value;
-            connection.invoke("SendMessage", user, message).catch(err => console.error(err.toString()));
+            connection.invoke("SendMessage", message).catch(err => console.error(err.toString()));
             event.preventDefault();
         });
     </script>
